@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Button, TextField } from "@mui/material"
 import { useTheme } from "@mui/material/styles"
+import { supabase } from '../../supabaseClient.js'
 
 function App() {
-  const ENDPOINT = "http://localhost:8004/monsters"
   const [name, setName] = React.useState("")
   const [alignment, setAlignment] = React.useState("")
   const [result, setResult] = React.useState("")
@@ -12,22 +12,16 @@ function App() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const url = new URL(ENDPOINT)
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({name, alignment}),
-      });
+      const { data, error } = await supabase
+        .from('monsters')
+        .insert([{ name, alignment }]);
 
-      if (!response.ok) {
-        throw new Error('API resonse not ok');
+      if (error) {
+        throw error;
       }
 
-      const json = await response.json();
-      setResult(() => json);
+      setResult(data);
       setName("")
       setAlignment("")
       setError("")
@@ -58,7 +52,7 @@ function App() {
         <Button type="submit" variant="contained" color="primary">Submit</Button>
       </form>
       {error && <h2 style={{ color: 'red'}}>{error}</h2>}
-      <h1>{result}</h1>
+      <h1>{result && JSON.stringify(result)}</h1>
     </Container>
   )
 }
