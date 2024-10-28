@@ -45,7 +45,7 @@ function App() {
         }}
       >
         <Grid2 container spacing={2}>
-          <Grid2 xs={12}>
+          <Grid2 size={4}>
             <TextField
               fullWidth
               margin="normal"
@@ -56,7 +56,7 @@ function App() {
               onChange={(event) => setName(() => event.target.value)}
             />
           </Grid2>
-          <Grid2 xs={12}>
+          <Grid2 size={4}>
             <TextField
               fullWidth
               margin="normal"
@@ -67,14 +67,14 @@ function App() {
               onChange={(event) => setAlignment(() => event.target.value)}
             />
           </Grid2>
-          <Grid2 xs={12}>
+          <Grid2 size={4}>
             <Button type="submit" 
                     sx={{
                       bgcolor:theme.palette.primary.main,
                       '&:hover': {
                       bgcolor:theme.palette.secondary.main
                       },
-                      padding: '40px', // Custom padding
+                      padding: '30px', // Custom padding
                       borderRadius: '8px', // Custom border radius
                       fontWeight: 'bold', // Bold text
                       fontSize: '16px', // Custom font size
